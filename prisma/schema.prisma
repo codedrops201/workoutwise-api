@@ -8,11 +8,23 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid())
+  id         String    @id @default(uuid())
   name       String
-  email      String   @unique
+  email      String    @unique
   password   String
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
+  Routine    Routine[]
 
   @@map("users")
+}
+
+model Routine {
+  id          String @id @default(uuid())
+  user_id     String
+  description String
+  name        String
+
+  user User @relation(fields: [user_id], references: [id])
+
+  @@map("routines")
 }
